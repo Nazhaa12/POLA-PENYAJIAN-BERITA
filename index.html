@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Teks Berita - Kelas XI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --bg-color: #f3f4f6;
+            --text-color: #333;
+            --white: #ffffff;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigasi / Tombol */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn:hover {
+            background-color: #e0f2fe;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+        }
+
+        /* Konten */
+        .tab-content {
+            display: none;
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 1.5rem;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+        }
+
+        /* Tabel Khusus */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        tr:hover {
+            background-color: #e0f2fe;
+        }
+
+        /* Kartu Kesimpulan Materi */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .card h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* Kotak Teks & Analisis */
+        .news-box, .analysis-box {
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .news-box {
+            background-color: #fffbeb;
+            border-left: 5px solid var(--accent-color);
+        }
+        
+        .analysis-box {
+            background-color: #f0fdf4;
+            border-left: 5px solid #16a34a;
+        }
+
+        .news-box h4 { color: #b45309; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; }
+        .news-box .news-type {
+            display: inline-block; background-color: var(--accent-color); color: white;
+            padding: 3px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; margin-bottom: 15px;
+        }
+        
+        .analysis-title { font-weight: bold; font-size: 1.1rem; color: var(--primary-color); margin-bottom: 10px; }
+
+        /* --- STYLING UNTUK KUIS --- */
+        .question-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question-box p {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .option-label {
+            display: block;
+            background-color: var(--white);
+            border: 1px solid #cbd5e1;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #e0f2fe;
+            border-color: var(--secondary-color);
+        }
+        
+        .option-label.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background-color: var(--success-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:hover { background-color: #059669; }
+
+        .result-container {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .result-success { background-color: #d1fae5; color: #065f46; border: 2px solid var(--success-color); }
+        .result-warning { background-color: #fef3c7; color: #92400e; border: 2px solid var(--accent-color); }
+        .result-danger { background-color: #fee2e2; color: #991b1b; border: 2px solid var(--danger-color); }
+
+        /* Kunci Jawaban Box */
+        .pembahasan-box {
+            display: none;
+            margin-top: 20px;
+            background-color: #f0fdf4;
+            border: 2px solid #16a34a;
+            padding: 20px;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .pembahasan-box h3 {
+            color: #15803d;
+            margin-top: 0;
+            border-bottom: 1px solid #bbf7d0;
+            padding-bottom: 10px;
+        }
+        
+        .reset-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .reset-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            font-weight: 300;
+        }
+        
+        footer strong { font-weight: 600; letter-spacing: 1px; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Media Pembelajaran Bahasa Indonesia</h1>
+        <p>Materi: Pola Penyajian Teks Berita | SMA Kelas XI</p>
+    </header>
+
+    <div class="container">
+        <!-- Navigasi Tab -->
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="openTab(event, 'materi')">📖 Materi Pembelajaran</button>
+            <button class="tab-btn" onclick="openTab(event, 'teks')">📰 Contoh Teks Berita</button>
+            <button class="tab-btn" onclick="openTab(event, 'analisis')">🔍 Contoh Analisis</button>
+            <button class="tab-btn" onclick="openTab(event, 'kuis')">📝 Kuis Interaktif</button>
+        </div>
+
+        <!-- TAB 1: MATERI -->
+        <div id="materi" class="tab-content active">
+            <h2>Pola Penyajian Teks Berita</h2>
+            
+            <h3>A. Pengertian Pola Penyajian Teks Berita</h3>
+            <p>Pola penyajian teks berita adalah cara atau urutan penulis dalam menyusun informasi dalam sebuah berita. Pola penyajian menentukan informasi mana yang disampaikan terlebih dahulu dan bagaimana informasi berikutnya dikembangkan.</p>
+            <p>Dalam pembelajaran ini, terdapat tiga pola penyajian teks berita, yaitu:</p>
+            <ul>
+                <li>Pola piramida terbalik</li>
+                <li>Pola kronologis</li>
+                <li>Pola deduktif</li>
+            </ul>
+
+            <h3>B. Pola Piramida Terbalik</h3>
+            <p>Pola piramida terbalik adalah pola penyajian berita yang menempatkan informasi paling penting pada bagian awal, kemudian diikuti informasi yang semakin kurang penting.</p>
+            <strong>Ciri-ciri:</strong>
+            <ul>
+                <li>Informasi utama berada di awal berita.</li>
+                <li>Fakta yang paling penting disampaikan terlebih dahulu.</li>
+                <li>Informasi pendukung berada setelah informasi utama.</li>
+                <li>Informasi tambahan atau kurang penting diletakkan di bagian akhir.</li>
+                <li>Pembaca dapat mengetahui inti berita sejak awal.</li>
+            </ul>
+            <p><strong>Urutan:</strong> Informasi paling penting &rarr; informasi pendukung &rarr; informasi tambahan</p>
+
+            <h3>C. Pola Kronologis</h3>
+            <p>Pola kronologis adalah pola penyajian berita yang mengurutkan informasi berdasarkan urutan waktu terjadinya suatu peristiwa.</p>
+            <strong>Ciri-ciri:</strong>
+            <ul>
+                <li>Peristiwa disampaikan sesuai urutan waktu.</li>
+                <li>Informasi bergerak dari kejadian awal menuju kejadian berikutnya.</li>
+                <li>Banyak menggunakan penanda waktu.</li>
+                <li>Pembaca dapat mengikuti perkembangan suatu peristiwa dari awal hingga akhir.</li>
+            </ul>
+            <strong>Contoh penanda waktu:</strong>
+            <ul>
+                <li>Pada awalnya, Kemudian, Setelah itu, Selanjutnya, Beberapa saat kemudian, Pada malam hari, Keesokan harinya.</li>
+            </ul>
+            <p><strong>Urutan:</strong> Peristiwa awal &rarr; peristiwa berikutnya &rarr; peristiwa selanjutnya &rarr; peristiwa akhir</p>
+
+            <h3>D. Pola Deduktif</h3>
+            <p>Pola deduktif adalah pola penyajian berita yang menyampaikan gagasan atau informasi umum terlebih dahulu, kemudian diikuti informasi yang lebih khusus sebagai penjelas.</p>
+            <strong>Ciri-ciri:</strong>
+            <ul>
+                <li>Gagasan utama berada di awal.</li>
+                <li>Bagian awal memberikan gambaran umum mengenai peristiwa.</li>
+                <li>Bagian berikutnya menjelaskan informasi secara lebih khusus.</li>
+                <li>Informasi pendukung digunakan untuk memperjelas gagasan utama.</li>
+            </ul>
+            <p><strong>Urutan:</strong> Gagasan umum &rarr; informasi khusus &rarr; rincian atau fakta pendukung</p>
+
+            <h3>E. Perbedaan Ketiga Pola Penyajian</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pola</th>
+                        <th>Dasar Penyusunan</th>
+                        <th>Ciri Utama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Piramida Terbalik</strong></td>
+                        <td>Tingkat kepentingan informasi</td>
+                        <td>Informasi terpenting di awal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kronologis</strong></td>
+                        <td>Urutan waktu</td>
+                        <td>Peristiwa disusun berdasarkan waktu</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deduktif</strong></td>
+                        <td>Hubungan umum-khusus</td>
+                        <td>Gagasan umum diikuti penjelasan khusus</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>F. Cara Mengidentifikasi Pola Penyajian</h3>
+            <p>Untuk menentukan pola penyajian sebuah teks berita, lakukan langkah berikut:</p>
+            <ol>
+                <li>Baca berita secara keseluruhan.</li>
+                <li>Perhatikan informasi pada paragraf pertama.</li>
+                <li>Tentukan bagaimana informasi berikutnya disusun.</li>
+                <li>Cari penanda waktu untuk mengetahui kemungkinan pola kronologis.</li>
+                <li>Perhatikan tingkat kepentingan informasi untuk mengetahui pola piramida terbalik.</li>
+                <li>Perhatikan hubungan gagasan umum dan khusus untuk mengetahui pola deduktif.</li>
+                <li>Tentukan pola yang paling sesuai dan berikan bukti dari teks.</li>
+            </ol>
+
+            <h3>G. Kesimpulan</h3>
+            <div class="summary-cards">
+                <div class="card">
+                    <h4>Piramida Terbalik = PENTING</h4>
+                    <p>Informasi terpenting disampaikan terlebih dahulu.</p>
+                </div>
+                <div class="card">
+                    <h4>Kronologis = WAKTU</h4>
+                    <p>Informasi disusun berdasarkan urutan terjadinya peristiwa.</p>
+                </div>
+                <div class="card">
+                    <h4>Deduktif = GAGASAN</h4>
+                    <p>Gagasan umum disampaikan terlebih dahulu, kemudian dijelaskan dengan informasi khusus.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: TEKS BERITA -->
+        <div id="teks" class="tab-content">
+            <h2>Kumpulan Teks Berita</h2>
+            <p>Topik: <strong>Abu Vulkanik Gunung Anak Krakatau</strong></p>
+            <p>Bacalah ketiga contoh teks berita di bawah ini, kemudian lihat bagian <strong>Contoh Analisis</strong> untuk mengetahui letak perbedaannya!</p>
+            
+            <div class="news-box">
+                <span class="news-type">Contoh 1: Pola Piramida Terbalik</span>
+                <h4>Abu Vulkanik Anak Krakatau Berdampak pada Penerbangan dan Sekolah</h4>
+                <p>Sebaran abu vulkanik Gunung Anak Krakatau berdampak pada sejumlah aktivitas masyarakat, termasuk penerbangan dan kegiatan sekolah. Kondisi tersebut terjadi setelah abu vulkanik menyebar ke beberapa wilayah.</p>
+                <p>Dampak juga dirasakan oleh masyarakat dalam bidang kesehatan. Dinas kesehatan menerima laporan warga yang mengalami keluhan pada saluran pernapasan. Kelompok lanjut usia menjadi salah satu kelompok yang lebih rentan terhadap dampak abu vulkanik.</p>
+                <p>Di sektor transportasi udara, sejumlah penerbangan mengalami pembatalan akibat kondisi abu vulkanik. Sementara itu, beberapa sekolah melakukan pembelajaran jarak jauh untuk menjaga keselamatan peserta didik.</p>
+            </div>
+
+            <div class="news-box">
+                <span class="news-type">Contoh 2: Pola Kronologis</span>
+                <h4>Aktivitas Abu Vulkanik Anak Krakatau Berdampak pada Masyarakat</h4>
+                <p>Pada malam hari, abu vulkanik Gunung Anak Krakatau mulai menyebar ke sejumlah wilayah. Kondisi tersebut menyebabkan masyarakat di beberapa daerah mulai merasakan dampaknya.</p>
+                <p>Setelah abu menyebar, muncul laporan mengenai gangguan kesehatan, terutama keluhan pada saluran pernapasan. Masyarakat kemudian diimbau untuk memperhatikan kondisi kesehatan dan mengurangi paparan abu vulkanik.</p>
+                <p>Kemudian, aktivitas penerbangan mulai terganggu. Sejumlah penerbangan dibatalkan karena kondisi abu vulkanik yang berada di wilayah jalur penerbangan.</p>
+                <p>Setelah itu, dampak juga dirasakan oleh sektor pendidikan. Beberapa sekolah melakukan pembelajaran jarak jauh sebagai langkah untuk menjaga keselamatan peserta didik.</p>
+                <p>Selanjutnya, masyarakat terus mengikuti perkembangan kondisi Gunung Anak Krakatau dan sebaran abu vulkaniknya.</p>
+            </div>
+
+            <div class="news-box">
+                <span class="news-type">Contoh 3: Pola Deduktif</span>
+                <h4>Abu Vulkanik Memengaruhi Berbagai Aktivitas Masyarakat</h4>
+                <p>Sebaran abu vulkanik Gunung Anak Krakatau memengaruhi berbagai aktivitas masyarakat di sejumlah wilayah. Dampaknya terlihat dalam bidang kesehatan, transportasi, dan pendidikan.</p>
+                <p>Dalam bidang kesehatan, masyarakat mengalami keluhan pada saluran pernapasan akibat paparan abu vulkanik. Kelompok tertentu, seperti lanjut usia, perlu mendapatkan perhatian lebih karena lebih rentan terhadap dampak tersebut.</p>
+                <p>Pada sektor transportasi, sebaran abu vulkanik menyebabkan sejumlah penerbangan mengalami gangguan dan pembatalan. Kondisi tersebut berkaitan dengan keselamatan penerbangan.</p>
+                <p>Sementara itu, pada bidang pendidikan, beberapa sekolah menyesuaikan kegiatan pembelajaran dengan menerapkan pembelajaran jarak jauh untuk sementara waktu.</p>
+            </div>
+        </div>
+
+        <!-- TAB 3: CONTOH ANALISIS -->
+        <div id="analisis" class="tab-content">
+            <h2>Contoh Analisis Pola Penyajian</h2>
+            <p>Berikut adalah analisis mengenai alasan penentuan pola penyajian dari ketiga teks berita mengenai "Abu Vulkanik Gunung Anak Krakatau" pada menu sebelumnya.</p>
+            
+            <div class="analysis-box">
+                <div class="analysis-title">Analisis Teks 1: Mengapa termasuk Pola Piramida Terbalik?</div>
+                <p>Karena informasi yang <strong>paling penting</strong>, yaitu dampak abu vulkanik terhadap aktivitas masyarakat, disampaikan secara utuh pada <strong>bagian awal</strong> (paragraf pertama). Setelah itu, barulah berita menjelaskan rincian dampak tersebut ke dalam bidang kesehatan, penerbangan, dan pendidikan pada paragraf-paragraf berikutnya yang sifatnya melengkapi/menurun tingkat kepentingannya.</p>
+            </div>
+
+            <div class="analysis-box">
+                <div class="analysis-title">Analisis Teks 2: Mengapa termasuk Pola Kronologis?</div>
+                <p>Karena informasi disusun berdasarkan <strong>urutan terjadinya peristiwa (waktu)</strong>. Hal ini dibuktikan dengan adanya kata penanda waktu dan urutan proses: mulai dari penyebaran abu (<em>"Pada malam hari..."</em>), munculnya gangguan kesehatan (<em>"Setelah abu menyebar..."</em>), terganggunya penerbangan (<em>"Kemudian..."</em>), hingga penyesuaian kegiatan sekolah (<em>"Setelah itu..." / "Selanjutnya..."</em>).</p>
+            </div>
+
+            <div class="analysis-box">
+                <div class="analysis-title">Analisis Teks 3: Mengapa termasuk Pola Deduktif?</div>
+                <p>Karena teks diawali dengan sebuah <strong>gagasan umum</strong> pada paragraf pertama, yaitu <em>"abu vulkanik memengaruhi berbagai aktivitas masyarakat di bidang kesehatan, transportasi, dan pendidikan."</em>. Setelah gagasan utama (umum) itu disampaikan, barulah dijelaskan secara <strong>khusus/rinci</strong> satu per satu pada paragraf berikutnya (paragraf 2 khusus kesehatan, paragraf 3 khusus transportasi, dan paragraf 4 khusus pendidikan).</p>
+            </div>
+        </div>
+
+        <!-- TAB 4: KUIS INTERAKTIF -->
+        <div id="kuis" class="tab-content">
+            <h2>Uji Pemahaman: Pola Penyajian Teks Berita</h2>
+            <p>Jawablah pertanyaan di bawah ini dengan memilih satu jawaban yang paling tepat!</p>
+
+            <form id="quizForm">
+                <!-- Pertanyaan 1 -->
+                <div class="question-box">
+                    <p>1. Dalam sebuah berita, informasi paling penting disampaikan pada bagian awal, kemudian diikuti informasi pendukung yang semakin kurang penting. Pola penyajian tersebut disebut ....</p>
+                    <label class="option-label"><input type="radio" name="q1" value="A"> A. Pola kronologis</label>
+                    <label class="option-label"><input type="radio" name="q1" value="B"> B. Pola deduktif</label>
+                    <label class="option-label"><input type="radio" name="q1" value="C"> C. Pola piramida terbalik</label>
+                    <label class="option-label"><input type="radio" name="q1" value="D"> D. Pola sebab-akibat</label>
+                </div>
+
+                <!-- Pertanyaan 2 -->
+                <div class="question-box">
+                    <p>2. Sebuah berita menceritakan perkembangan suatu inovasi mulai dari proses awal, tahap pengembangan, hingga hasil akhirnya sesuai urutan waktu. Pola penyajian yang digunakan adalah ....</p>
+                    <label class="option-label"><input type="radio" name="q2" value="A"> A. Pola kronologis</label>
+                    <label class="option-label"><input type="radio" name="q2" value="B"> B. Pola piramida terbalik</label>
+                    <label class="option-label"><input type="radio" name="q2" value="C"> C. Pola deduktif</label>
+                    <label class="option-label"><input type="radio" name="q2" value="D"> D. Pola perbandingan</label>
+                </div>
+
+                <!-- Pertanyaan 3 -->
+                <div class="question-box">
+                    <p>3. Sebuah berita diawali dengan pernyataan utama mengenai manfaat teknologi pertanian. Setelah itu, paragraf berikutnya menjelaskan alasan, manfaat, dan penerapannya secara lebih rinci. Pola penyajian tersebut adalah ....</p>
+                    <label class="option-label"><input type="radio" name="q3" value="A"> A. Pola kronologis</label>
+                    <label class="option-label"><input type="radio" name="q3" value="B"> B. Pola deduktif</label>
+                    <label class="option-label"><input type="radio" name="q3" value="C"> C. Pola piramida terbalik</label>
+                    <label class="option-label"><input type="radio" name="q3" value="D"> D. Pola deskriptif</label>
+                </div>
+
+                <button type="button" id="submitBtn" class="submit-btn" onclick="cekKuis()">Cek Jawaban & Lihat Skor</button>
+            </form>
+
+            <!-- Kotak Hasil Skor -->
+            <div id="quizResult" class="result-container"></div>
+
+            <!-- Kotak Pembahasan (Awalnya Disembunyikan) -->
+            <div id="pembahasan" class="pembahasan-box">
+                <h3>Kunci Jawaban & Pembahasan</h3>
+                
+                <p><strong>1. Kunci: C. Pola piramida terbalik</strong><br>
+                <em>Pembahasan:</em> Sesuai namanya, pola piramida terbalik mengurutkan berita dari yang paling penting (inti berita di awal) meruncing ke bawah menjadi informasi tambahan yang makin kurang penting.</p>
+                
+                <p><strong>2. Kunci: A. Pola kronologis</strong><br>
+                <em>Pembahasan:</em> Kata kunci pada soal adalah "sesuai urutan waktu". Setiap teks berita yang mengurutkan kejadian dari awal kejadian hingga akhir menggunakan penanda waktu tergolong pola kronologis.</p>
+                
+                <p><strong>3. Kunci: B. Pola deduktif</strong><br>
+                <em>Pembahasan:</em> Pola deduktif adalah pola yang menyajikan "pernyataan utama (umum)" terlebih dahulu, lalu dijabarkan dengan "rincian/penjelasan khusus" di bawahnya.</p>
+                
+                <button type="button" class="reset-btn" onclick="ulangiKuis()">Ulangi Kuis</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Media Pembelajaran Berbasis Web - Teks Berita SMA Kelas XI</p>
+        <p>&copy; 2026 <strong>Nazha Alyandra Ferdiansyah, S.Pd.</strong></p>
+    </footer>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Fungsi untuk Navigasi Tab
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            
+            setTimeout(() => {
+                document.getElementById(tabName).classList.add("active");
+            }, 10); 
+            
+            evt.currentTarget.className += " active";
+        }
+
+        // Fungsi untuk mengecek kuis
+        function cekKuis() {
+            let totalSkor = 0;
+            const poinPerSoal = 100 / 3; 
+
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+
+            if (!q1 || !q2 || !q3) {
+                alert("Silakan jawab semua pertanyaan terlebih dahulu sebelum mengecek skor!");
+                return;
+            }
+
+            // Hitung Skor
+            if (q1.value === "C") totalSkor += poinPerSoal;
+            if (q2.value === "A") totalSkor += poinPerSoal;
+            if (q3.value === "B") totalSkor += poinPerSoal;
+
+            totalSkor = Math.round(totalSkor);
+
+            // Tampilkan Hasil Skor
+            const resultBox = document.getElementById("quizResult");
+            resultBox.style.display = "block";
+
+            if (totalSkor === 100) {
+                resultBox.className = "result-container result-success";
+                resultBox.innerHTML = `Skor Anda: ${totalSkor} <br><span style="font-size:1rem; font-weight:normal;">Luar Biasa! Anda telah memahami materi pola penyajian berita dengan sempurna! 🎉</span>`;
+            } else if (totalSkor >= 60) {
+                resultBox.className = "result-container result-warning";
+                resultBox.innerHTML = `Skor Anda: ${totalSkor} <br><span style="font-size:1rem; font-weight:normal;">Kerja bagus! Namun, masih ada jawaban yang kurang tepat. Perhatikan pembahasan di bawah. 👍</span>`;
+            } else {
+                resultBox.className = "result-container result-danger";
+                resultBox.innerHTML = `Skor Anda: ${totalSkor} <br><span style="font-size:1rem; font-weight:normal;">Jangan menyerah! Silakan pelajari kunci jawaban dan pembahasan di bawah ini. 💪</span>`;
+            }
+
+            // Tampilkan Kunci Jawaban & Pembahasan
+            document.getElementById("pembahasan").style.display = "block";
+
+            // Sembunyikan tombol cek jawaban
+            document.getElementById("submitBtn").style.display = "none";
+
+            // Kunci semua radio button (disable) agar siswa tidak mengubah jawaban
+            const allRadios = document.querySelectorAll('input[type="radio"]');
+            const allLabels = document.querySelectorAll('.option-label');
+            
+            allRadios.forEach(radio => radio.disabled = true);
+            allLabels.forEach(label => label.classList.add("disabled"));
+        }
+
+        // Fungsi untuk mengulangi kuis (Me-reset form)
+        function ulangiKuis() {
+            // Reset form input
+            document.getElementById("quizForm").reset();
+            
+            // Sembunyikan hasil dan pembahasan
+            document.getElementById("quizResult").style.display = "none";
+            document.getElementById("pembahasan").style.display = "none";
+            
+            // Munculkan kembali tombol Cek Jawaban
+            document.getElementById("submitBtn").style.display = "block";
+
+            // Aktifkan kembali radio button
+            const allRadios = document.querySelectorAll('input[type="radio"]');
+            const allLabels = document.querySelectorAll('.option-label');
+            
+            allRadios.forEach(radio => radio.disabled = false);
+            allLabels.forEach(label => label.classList.remove("disabled"));
+        }
+    </script>
+</body>
+</html>
